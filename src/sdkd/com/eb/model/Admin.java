@@ -133,7 +133,6 @@ public class Admin implements java.io.Serializable {
 	public Timestamp getBornDay() {
 		return this.bornDay;
 	}
-
 	public void setBornDay(Timestamp bornDay) {
 		this.bornDay = bornDay;
 	}
