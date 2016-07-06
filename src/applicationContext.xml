@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/tx
+    			    	http://www.springframework.org/schema/tx/spring-tx.xsd
+     			    	http://www.springframework.org/schema/aop
+    			    	http://www.springframework.org/schema/aop/spring-aop.xsd"
+   default-autowire="byName" 
+   default-lazy-init="false"
+   >
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+	
+		
+<!--	 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+<!--     配置事务通知器 -->
+    <tx:advice id="advisor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="register*" propagation="REQUIRED" rollback-for="exception"/>
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="exception"/>
+            <tx:method name="modify*" propagation="REQUIRED" rollback-for="exception"/>
+            <tx:method name="get*" propagation="NOT_SUPPORTED" />
+            <tx:method name="*" propagation="SUPPORTS" rollback-for="exception"/>
+        </tx:attributes>
+    </tx:advice>
+    
+<!--	<bean id="sessionFactory"-->
+<!--		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">-->
+<!--	<property name="mappingResources">-->
+<!--		<list>-->
+<!--			<value>sdkd/com/eb/model/Orderdetail.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Commonuser.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Usertype.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Orderstate.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/User.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Admin.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Orderform.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/News.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Sex.hbm.xml</value>-->
+<!--			<value>sdkd/com/eb/model/Paymethod.hbm.xml</value></list>-->
+<!--	</property></bean>-->
+	
+		<import resource="applicationContext-login.xml" />
+	
+	
+	<bean id="OrderdetailDAO"
+		class="sdkd.com.eb.model.OrderdetailDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CommonuserDAO" class="sdkd.com.eb.model.CommonuserDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UsertypeDAO" class="sdkd.com.eb.model.UsertypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrderstateDAO" class="sdkd.com.eb.model.OrderstateDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UserDAO" class="sdkd.com.eb.model.UserDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AdminDAO" class="sdkd.com.eb.model.AdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrderformDAO" class="sdkd.com.eb.model.OrderformDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="NewsDAO" class="sdkd.com.eb.model.NewsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SexDAO" class="sdkd.com.eb.model.SexDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PaymethodDAO" class="sdkd.com.eb.model.PaymethodDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean></beans>
